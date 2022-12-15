@@ -15,7 +15,7 @@ def hello_world():
 	return f"Hey, {x}"
 
 @app.route('/login', methods=['POST'])
-def GetPassword():
+def PostPassword():
 	payload = request.get_json()
 	password="flask2023"
 	token=build_token()
@@ -23,6 +23,22 @@ def GetPassword():
 		return 'Unauthorized', 401
 	else :
 		return {"token":token},200
+
+
+@app.route('/questions', methods=['POST'])
+def PostQuestion():
+	#Récupérer le token envoyé en paramètre
+	token=request.headers.get('Authorization')
+	if token is not None:
+		token=token.split("Bearer ",1)[1]
+		result=decode_token(token)
+	else:
+		return "No token"
+	if result=="quiz-app-admin":
+		return token
+	else :
+		return "Token expired",401
+	
 
 if __name__ == "__main__":
     app.run()
