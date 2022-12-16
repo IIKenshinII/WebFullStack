@@ -1,6 +1,7 @@
 from flask import Flask,request
 from flask_cors import CORS
 from jwt_utils import *
+from dbGestion import *
 
 app = Flask(__name__)
 CORS(app)
@@ -29,15 +30,20 @@ def PostPassword():
 def PostQuestion():
 	#Récupérer le token envoyé en paramètre
 	token=request.headers.get('Authorization')
+	payload = request.get_json()
+	#on vérifie qu'il y ai bien un token
+	question=Question()
+	question.JsonToPy(payload)
+	test=insert_question(question)
 	if token is not None:
 		token=token.split("Bearer ",1)[1]
 		result=decode_token(token)
 	else:
-		return "No token"
+		return 'Unauthorized', 401
 	if result=="quiz-app-admin":
-		return token
+		return {'id':test},200
 	else :
-		return "Token expired",401
+		return result,401
 	
 
 if __name__ == "__main__":
