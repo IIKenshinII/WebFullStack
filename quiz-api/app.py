@@ -46,20 +46,20 @@ def PostQuestion():
 	else :
 		return result,401
 
+# @app.route('/questions/<int:idQuestion>', methods=['PUT'])
+# def PutQuestion(idQuestion):
+# 	#Récupérer le token envoyé en paramètre
+# 	token=request.headers.get('Authorization')
+# 	payload = request.get_json()
+# 	#on vérifie qu'il y ai bien un token valide
+# 	if token is not None:
+# 		token=token.split("Bearer ",1)[1]
+# 		result=decode_token(token)
+# 	else:
+# 		return 'Unauthorized', 401
 
-#@app.route('/questions/<int:idQuestion>', methods=['PUT'])
-#def PutQuestion(idQuestion):
-	#Récupérer le token envoyé en paramètre
-	token=request.headers.get('Authorization')
-	payload = request.get_json()
-	#on vérifie qu'il y ai bien un token valide
-	if token is not None:
-		token=token.split("Bearer ",1)[1]
-		result=decode_token(token)
-	else:
-		return 'Unauthorized', 401
+# 	return 200
 
-	return 200
 
 if __name__ == "__main__":
     app.run()
