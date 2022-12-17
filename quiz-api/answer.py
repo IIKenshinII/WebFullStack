@@ -1,6 +1,5 @@
 class Answer():
-    id=None
-    def __init__(self,idQuestion=None,text=None,isCorrect=None):
+    def __init__(self,idQuestion:int=None,text:str=None,isCorrect:int=None,id:int=None):
         self.idQuestion=idQuestion
         self.text=text
         self.isCorrect=isCorrect

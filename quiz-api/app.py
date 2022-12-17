@@ -31,20 +31,35 @@ def PostQuestion():
 	#Récupérer le token envoyé en paramètre
 	token=request.headers.get('Authorization')
 	payload = request.get_json()
-	#on vérifie qu'il y ai bien un token
-	question=Question()
-	question.JsonToPy(payload)
-	test=insert_question(question)
+	#on vérifie qu'il y ai bien un token valide
 	if token is not None:
 		token=token.split("Bearer ",1)[1]
 		result=decode_token(token)
 	else:
 		return 'Unauthorized', 401
+	#si le token est valide on retourn l'id de la question ajouté et le message http 200
 	if result=="quiz-app-admin":
+		question=Question()
+		question.JsonToPy(payload)
+		test=insert_question(question)
 		return {'id':test},200
 	else :
 		return result,401
-	
+
+
+#@app.route('/questions/<int:idQuestion>', methods=['PUT'])
+#def PutQuestion(idQuestion):
+	#Récupérer le token envoyé en paramètre
+	token=request.headers.get('Authorization')
+	payload = request.get_json()
+	#on vérifie qu'il y ai bien un token valide
+	if token is not None:
+		token=token.split("Bearer ",1)[1]
+		result=decode_token(token)
+	else:
+		return 'Unauthorized', 401
+
+	return 200
 
 if __name__ == "__main__":
     app.run()
