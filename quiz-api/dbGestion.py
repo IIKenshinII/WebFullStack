@@ -60,3 +60,30 @@ def insert_answer(question,cur,id):
     except Error as e:
             return "insert answer failed"
     return cur.lastrowid
+
+
+def get_question(id):
+    conn=create_connection()
+    cur = conn.cursor()
+    cur.execute("begin")
+    get_question = ''' SELECT position,title,image,text,id FROM Question WHERE id=? '''
+    get_answers=''' SELECT idQuestion,text,isCorrect,id FROM Answer WHERE idQuestion=? ORDER BY ROWID '''
+    id_data=(id,)
+    try:
+        cur.execute(get_question, id_data)
+        rowsQuestion=cur.fetchall()
+        cur.execute(get_answers, id_data)
+        rowsAnswer=cur.fetchall()
+        cur.close()
+        conn.close()
+        if len(rowsQuestion)==0 or len(rowsAnswer)==0:
+            return "get question failed"
+        q=None
+        for row in rowsQuestion:
+            q=Question(row[0],row[1],row[2],row[3],row[4],rowsAnswer)
+        return q
+    except Error as e:
+        conn.rollback()
+        cur.close()
+        conn.close()
+        return "get question failed"

@@ -31,12 +31,7 @@ def PostQuestion():
 	#Récupérer le token envoyé en paramètre
 	token=request.headers.get('Authorization')
 	payload = request.get_json()
-	#on vérifie qu'il y ai bien un token valide
-	if token is not None:
-		token=token.split("Bearer ",1)[1]
-		result=decode_token(token)
-	else:
-		return 'Unauthorized', 401
+	result=verifyToken(token)
 	#si le token est valide on retourn l'id de la question ajouté et le message http 200
 	if result=="quiz-app-admin":
 		question=Question()
@@ -60,6 +55,28 @@ def PostQuestion():
 
 # 	return 200
 
+
+@app.route('/questions/<int:idQuestion>', methods=['GET'])
+def GetQuestion(idQuestion):
+	#Récupérer le token envoyé en paramètre
+	question_result=get_question(idQuestion)
+	test=question_result.PyToJson()
+	if question_result=="get question failed":
+		return question_result,404
+	else :
+		return question_result.PyToJson(),200
+	
+
+
+def verifyToken(token):
+	#on vérifie qu'il y ai bien un token valide
+	if token is not None:
+		token=token.split("Bearer ",1)[1]
+		result=decode_token(token)
+	else:
+		return 'Unauthorized', 401
+
+	return result
 
 if __name__ == "__main__":
     app.run()

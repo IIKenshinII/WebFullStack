@@ -3,9 +3,10 @@ class Answer():
         self.idQuestion=idQuestion
         self.text=text
         self.isCorrect=isCorrect
+        self.id=id
 
     def PyToJson(self):
-        response={"text":self.text,"id":self.id,"idQuestion":self.idQuestion,"isCorrect":self.isCorrect}
+        response={"text":self.text,"id":self.id,"idQuestion":self.idQuestion,"isCorrect":not not self.isCorrect}
         return response
 
     def JsonToPy(self,payload):
