@@ -60,7 +60,6 @@ def PostQuestion():
 def GetQuestion(idQuestion):
 	#Récupérer le token envoyé en paramètre
 	question_result=get_question(idQuestion)
-	test=question_result.PyToJson()
 	if question_result=="get question failed":
 		return question_result,404
 	else :
