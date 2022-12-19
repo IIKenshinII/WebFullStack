@@ -1,5 +1,4 @@
 from answer import *
-import json
 class Question():
     def __init__(self,pos:int=None,title: str=None,image:str=None,text: str=None,id:int=None,possibleAnswers=None):
         self.title = title
@@ -22,6 +21,7 @@ class Question():
        setattr(self,'text',payload['text'])
        setattr(self,'title',payload['title'])
        setattr(self,'position',payload['position'])
+       setattr(self,'possibleAnswers',[])
        for answer in payload['possibleAnswers']:
             ans=Answer()
             setattr(ans,'isCorrect',answer['isCorrect'])
