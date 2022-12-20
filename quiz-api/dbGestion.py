@@ -1,6 +1,7 @@
 import sqlite3
 from sqlite3 import Error
 from question import *
+from participation import *
 
 
 def create_connection():
@@ -254,3 +255,65 @@ def get_number_questions():
     cur.close()
     conn.close()
     return nb_questions
+
+def calculate_score(participation):
+    score=0
+    max_range=get_number_questions()+1
+    index=0
+    answList=getattr(participation,'ansList')
+    for i in range(1,max_range):
+        q=get_question_position(i)
+        if getattr(getattr(q,'possibleAnswers')[answList[index]-1],'isCorrect')==1:
+            score=score+1
+        index=index+1
+    return score
+
+def add_participation(participation):
+    conn=create_connection()
+    cur = conn.cursor()
+    cur.execute("begin")
+    insert_to_part = ''' INSERT INTO Participation(name,score) VALUES(?,?) '''
+    data_p=(getattr(participation,'name'),getattr(participation,'score'))
+    result=1
+    try:
+        cur.execute(insert_to_part, data_p)
+        conn.commit()
+    except Error as e:
+        conn.rollback()
+        result= "insert question failed"
+    cur.close()
+    conn.close()
+    return result
+
+def get_all_participations():
+    conn=create_connection()
+    cur = conn.cursor()
+    cur.execute("begin")
+    get_q=''' SELECT name,score FROM Participation ORDER BY score DESC'''
+    participations_list=[]
+    try:
+        cur.execute(get_q)
+        rows=cur.fetchall()
+        for row in rows:
+            p=Participation(row[0],[],row[1])
+            participations_list.append(p.PyToJson())
+    except Error as e:
+        print(e)
+    cur.close()
+    conn.close()
+    return participations_list
+
+def delete_all_participations():
+    conn=create_connection()
+    cur = conn.cursor()
+    cur.execute("begin")
+    delete_p = ''' DELETE FROM Participation'''
+    result=1
+    try:
+        cur.execute(delete_p)
+        conn.commit()
+    except Error as e:
+        result="failed to delete all participations"
+    cur.close()
+    conn.close()
+    return result

@@ -2,13 +2,15 @@ from flask import Flask,request
 from flask_cors import CORS
 from jwt_utils import *
 from dbGestion import *
+from participation import *
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route('/quiz-info', methods=['GET'])
 def GetQuizInfo():
-	return {"size": get_number_questions(), "scores": []}, 200
+	scores=get_all_participations()
+	return {"size": get_number_questions(), "scores": scores}, 200
 
 @app.route('/')
 def hello_world():
@@ -23,7 +25,7 @@ def PostPassword():
 	if password!=payload['password']:
 		return 'Unauthorized', 401
 	else :
-		return {"token":token},200
+		return {'token':token},200
 
 
 @app.route('/questions', methods=['POST'])
@@ -45,7 +47,7 @@ def PostQuestion():
 		equilibrate()
 		return {'id':test},200
 	else :
-		return result
+		return result,401
 
 @app.route('/questions/<int:idQuestion>', methods=['PUT'])
 def PutQuestion(idQuestion):
@@ -104,7 +106,7 @@ def DeleteQuestion(idQuestion):
 			equilibrate()
 			return "sucess",204	
 	else :
-		return result
+		return result,401
 
 @app.route('/questions/all', methods=['DELETE'])
 def DeleteAllQuestion():
@@ -118,18 +120,35 @@ def DeleteAllQuestion():
 		else :
 			return "sucess",204	
 	else :
-		return result
+		return result,401
 
 @app.route('/participations', methods=['POST'])
 def PostParticipation():
-	#Récupérer le token envoyé en paramètre
-	token=request.headers.get('Authorization')
-	result=verifyToken(token)
 	payload = request.get_json()
 	if len(payload['answers'])!=get_number_questions():
 		return "Bad request",400
 	else :
-		return "sucess",204	
+		participation=Participation(payload['playerName'],payload['answers'])
+		setattr(participation,'score',calculate_score(participation))
+		result=add_participation(participation)
+		if type(result)==int:
+			return participation.PyToJson(),200	
+		else:
+			return "error",404
+
+
+@app.route('/participations/all', methods=['DELETE'])
+def DeleteAllParticipations():
+	token=request.headers.get('Authorization')
+	question_result=delete_all_participations()
+	result=verifyToken(token)
+	if result=="quiz-app-admin":
+		if type(question_result)==str:
+			return question_result,404
+		else :
+			return "sucess",204	
+	else :
+		return result,401
 
 def verifyToken(token):
 	#on vérifie qu'il y ai bien un token valide
@@ -138,7 +157,7 @@ def verifyToken(token):
 		token=token.split("Bearer ",1)[1]
 		result=decode_token(token)
 	else:
-		return 'Unauthorized', 401
+		return 'Unauthorized'
 
 	return result
 
