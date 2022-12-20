@@ -317,3 +317,9 @@ def delete_all_participations():
     cur.close()
     conn.close()
     return result
+
+def database_create():
+    with create_connection() as db:
+        with open('bdd.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        db.commit()

@@ -1,0 +1,24 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "Answer" (
+	"id"	INTEGER,
+	"text"	TEXT,
+	"isCorrect"	INTEGER,
+	"idQuestion"	INTEGER NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT),
+	FOREIGN KEY("idQuestion") REFERENCES "Question"("id")
+);
+CREATE TABLE IF NOT EXISTS "Question" (
+	"id"	INTEGER NOT NULL,
+	"position"	INTEGER UNIQUE,
+	"title"	TEXT,
+	"image"	TEXT,
+	"text"	INTEGER,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+CREATE TABLE IF NOT EXISTS "Participation" (
+	"id"	INTEGER,
+	"name"	TEXT,
+	"score"	INTEGER,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+COMMIT;

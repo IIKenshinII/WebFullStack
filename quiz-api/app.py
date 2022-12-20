@@ -28,6 +28,18 @@ def PostPassword():
 		return {'token':token},200
 
 
+@app.route('/rebuild-db', methods=['POST'])
+def RebuildDb():
+	#Récupérer le token envoyé en paramètre
+	token=request.headers.get('Authorization')
+	result=verifyToken(token)
+	if result=="quiz-app-admin":
+		database_create()
+		return "Ok",200
+	else :
+		return result,401
+
+
 @app.route('/questions', methods=['POST'])
 def PostQuestion():
 	#Récupérer le token envoyé en paramètre
