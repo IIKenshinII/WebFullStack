@@ -198,9 +198,9 @@ def update_all_positions(position):
         rows=cur.fetchall()
         cur.close()
         conn.close()
-        add=1
-        if len(rows)==1:
-            add=0
+        add=0
+        if len(rows)>1:
+            add=rows[0][0]
         for row in rows:
             q=Question(row[0],row[1],row[2],row[3],row[4],[])
             setattr(q,'position',getattr(q,'position')+add)
@@ -209,6 +209,8 @@ def update_all_positions(position):
         cur.close()
         conn.close()
         result="Failed to add question"
+    if len(rows)==1:
+        result=rows[0][0]
 
     return result
 
@@ -216,29 +218,39 @@ def equilibrate():
     conn=create_connection()
     cur = conn.cursor()
     cur.execute("begin")
-    get_q=''' SELECT position,title,image,text,id FROM Question ORDER BY position DESC'''
+    get_q=''' SELECT position,title,image,text,id FROM Question ORDER BY position ASC'''
     result=1
     try:
         cur.execute(get_q)
         rows=cur.fetchall()
         cur.close()
         conn.close()
-        prev_row=rows[0]
-        rows.pop(0)
-        if(len(rows)>2):
-            q=Question(prev_row[0],prev_row[1],prev_row[2],prev_row[3],prev_row[4],[])
-            if(prev_row[0]-rows[0][0]>=2):
-                setattr(q,'position',prev_row[0]-1)
-                result=update_question(q)
-            for row in rows:
-                q=Question(row[0],row[1],row[2],row[3],row[4],[])
-                if(prev_row[0]-row[0]>1):
-                    setattr(q,'position',prev_row[0]-1)
-                    result=update_question(q)
-                prev_row=row
+        add=1
+        for row in rows:
+            q=Question(row[0],row[1],row[2],row[3],row[4],[])
+            setattr(q,'position',add)
+            result=update_question(q)
+            add=add+1
     except Error as e:
         cur.close()
         conn.close()
         result="Failed to equilibrate"
 
     return result
+
+
+def get_number_questions():
+    conn=create_connection()
+    cur = conn.cursor()
+    cur.execute("begin")
+    get_q=''' SELECT * FROM Question'''
+    nb_questions=0
+    try:
+        cur.execute(get_q)
+        rows=cur.fetchall()
+        nb_questions=len(rows)
+    except Error as e:
+        print(e)
+    cur.close()
+    conn.close()
+    return nb_questions

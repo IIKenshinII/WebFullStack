@@ -8,7 +8,7 @@ CORS(app)
 
 @app.route('/quiz-info', methods=['GET'])
 def GetQuizInfo():
-	return {"size": 0, "scores": []}, 200
+	return {"size": get_number_questions(), "scores": []}, 200
 
 @app.route('/')
 def hello_world():
@@ -42,6 +42,7 @@ def PostQuestion():
 		question=Question()
 		question.JsonToPy(payload)
 		test=insert_question(question)
+		equilibrate()
 		return {'id':test},200
 	else :
 		return result
@@ -56,7 +57,9 @@ def PutQuestion(idQuestion):
 		question=get_question(idQuestion)
 		if type(question)==Question:
 			question.JsonToPy(payload)
-			update_all_positions(getattr(question,'position'))
+			val=update_all_positions(getattr(question,'position'))
+			if type(val)==int:
+				setattr(question,'position',getattr(question,'position')+val)
 			result_update=update_question(question)
 			equilibrate()
 			if result_update=="update successfull":
@@ -68,27 +71,6 @@ def PutQuestion(idQuestion):
 		
 	else :
 		return result,401	
-
-
-# @app.route('/questions//<int:year>', methods=['PUT'])
-# def PutQuestionAtPosition(year,month):
-# 	token=request.headers.get('Authorization')
-# 	payload = request.get_json()
-# 	position = request.args.getlist()
-# 	result=verifyToken(token)
-# 	#si le token est valide on retourn l'id de la question ajouté et le message http 200
-# 	if result=="quiz-app-admin":
-# 		question=get_question(idQuestion)
-# 		if question!="get question failed":
-# 			question.JsonToPy(payload)
-# 			result_update=update_question(question)
-# 			if result_update=="update successfull":
-# 				return result_update,204
-# 		else:
-# 			return "Request not found",404
-		
-# 	else :
-# 		return result,401
 
 
 @app.route('/questions/<int:idQuestion>', methods=['GET'])
@@ -119,6 +101,7 @@ def DeleteQuestion(idQuestion):
 		if type(question_result)==str:
 			return question_result,404
 		else :
+			equilibrate()
 			return "sucess",204	
 	else :
 		return result
@@ -136,6 +119,17 @@ def DeleteAllQuestion():
 			return "sucess",204	
 	else :
 		return result
+
+@app.route('/participations', methods=['POST'])
+def PostParticipation():
+	#Récupérer le token envoyé en paramètre
+	token=request.headers.get('Authorization')
+	result=verifyToken(token)
+	payload = request.get_json()
+	if len(payload['answers'])!=get_number_questions():
+		return "Bad request",400
+	else :
+		return "sucess",204	
 
 def verifyToken(token):
 	#on vérifie qu'il y ai bien un token valide
