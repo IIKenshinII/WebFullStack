@@ -77,7 +77,7 @@ def PutQuestion(idQuestion):
 			result_update=update_question(question)
 			equilibrate()
 			if result_update=="update successfull":
-				return 'successfull',204
+				return '',204
 			else:
 				return result_update,404
 		else:
@@ -141,10 +141,12 @@ def PostParticipation():
 		return "Bad request",400
 	else :
 		participation=Participation(payload['playerName'],payload['answers'])
-		setattr(participation,'score',calculate_score(participation))
+		score,answersSummaries=calculate_score(participation)
+		setattr(participation,'score',score)
+		setattr(participation,'answersSummaries',answersSummaries)
 		result=add_participation(participation)
 		if type(result)==int:
-			return participation.PyToJson(),200	
+			return participation.PyToJson2(),200	
 		else:
 			return "error",404
 

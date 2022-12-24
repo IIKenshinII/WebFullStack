@@ -261,26 +261,36 @@ def calculate_score(participation):
     max_range=get_number_questions()+1
     index=0
     answList=getattr(participation,'ansList')
+    goodAnswerList=[]
     for i in range(1,max_range):
         q=get_question_position(i)
+        correctAnswerPosition=1
+        for ans in getattr(q,'possibleAnswers'):
+            if getattr(ans,'isCorrect')==1:
+                break
+            correctAnswerPosition=correctAnswerPosition+1
         if getattr(getattr(q,'possibleAnswers')[answList[index]-1],'isCorrect')==1:
             score=score+1
+            wasCorrect=True
+        else:
+            wasCorrect=False
         index=index+1
-    return score
+        goodAnswerList.append({'correctAnswerPosition':correctAnswerPosition,'wasCorrect':wasCorrect})
+    return score,goodAnswerList
 
 def add_participation(participation):
     conn=create_connection()
     cur = conn.cursor()
     cur.execute("begin")
-    insert_to_part = ''' INSERT INTO Participation(name,score) VALUES(?,?) '''
-    data_p=(getattr(participation,'name'),getattr(participation,'score'))
+    insert_to_part = ''' INSERT INTO Participation(name,score,date) VALUES(?,?,?) '''
+    data_p=(getattr(participation,'name'),getattr(participation,'score'),getattr(participation,'date'))
     result=1
     try:
         cur.execute(insert_to_part, data_p)
         conn.commit()
     except Error as e:
         conn.rollback()
-        result= "insert question failed"
+        result= "insert participation failed"
     cur.close()
     conn.close()
     return result
@@ -289,13 +299,13 @@ def get_all_participations():
     conn=create_connection()
     cur = conn.cursor()
     cur.execute("begin")
-    get_q=''' SELECT name,score FROM Participation ORDER BY score DESC'''
+    get_q=''' SELECT name,score,date FROM Participation ORDER BY score DESC'''
     participations_list=[]
     try:
         cur.execute(get_q)
         rows=cur.fetchall()
         for row in rows:
-            p=Participation(row[0],[],row[1])
+            p=Participation(row[0],[],row[1],row[2])
             participations_list.append(p.PyToJson())
     except Error as e:
         print(e)

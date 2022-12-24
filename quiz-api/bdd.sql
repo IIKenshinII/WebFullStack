@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS "Participation" (
 	"id"	INTEGER,
 	"name"	TEXT,
 	"score"	INTEGER,
+	"date"	TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT)
 );
 COMMIT;
