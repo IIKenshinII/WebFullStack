@@ -27,5 +27,5 @@ COPY . .
     #version="1.0"
 
 # Commande de démarrage du serveur gunicorn
-#CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app", "--log-level", "info", "--error-logfile", "-", "--access-logfile", "-"]
-CMD ["flask","run","--host","0.0.0.0","--port","5000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app", "--log-level", "info", "--error-logfile", "-", "--access-logfile", "-"]
+#CMD ["flask","run","--host","0.0.0.0","--port","5000"]
