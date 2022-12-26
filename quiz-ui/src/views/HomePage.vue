@@ -22,9 +22,8 @@ export default {
     console.log("Composant Home page 'created'");
     try {
       const value = await quizApiService.getQuizInfo();
-      var registered = value.data['scores']
+      var registered = value.data['scores'];
       this.registeredScores = registered;
-      console.log(registered);
     } catch (err) {
       console.log(err);
     }

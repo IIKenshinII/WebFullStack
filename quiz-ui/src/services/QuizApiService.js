@@ -33,5 +33,9 @@ export default {
   getQuestion(position) {
     // not implemented
     return this.call("get","questions?position="+position);
+  },
+  postAnswers(Answers)
+  {
+    return this.call("post","participations",Answers);
   }
 };

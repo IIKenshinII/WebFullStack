@@ -12,10 +12,10 @@ export default {
   },
   saveParticipationScore(participationScore) {
     // todo : implement
-    window.localStorage.setItem("participationScore", participationScore);
+    window.localStorage.setItem("participationScore", JSON.stringify(participationScore));
   },
   getParticipationScore() {
     // todo : implement
-    return window.localStorage.getItem("participationScore");
+    return JSON.parse(window.localStorage.getItem("participationScore"));
   }
 };
