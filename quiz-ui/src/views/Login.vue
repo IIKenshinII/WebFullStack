@@ -40,7 +40,6 @@
           {
             participationStorageService.saveToken(String(val.data['token']));
             console.log(participationStorageService.getToken());
-            this.$emit('updatenav');
             this.$router.push('/Adminparam');
           }
 

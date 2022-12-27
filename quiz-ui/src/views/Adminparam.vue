@@ -11,37 +11,40 @@
             <div class="form-group">
               <label>Question en JSON:</label>
               <textarea v-model="question" type="text" class="form-control" placeholder="question" autocomplete="on"
-                @keydown.enter="addQuestion"/>
+                @keydown.enter="addQuestion"></textarea>
             </div>
             <div class="space">
               <button type="button" class="btn btn-primary" @click="addQuestion">add</button><br />
-              <p v-if="isWrong" style="color:red;">Mot de passe incorrect</p>
             </div>
           </form>
         </li>
       </ul>
     </div>
     <div class="btn-group dropdown">
-      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+        data-bs-auto-close="false">
         Modifier une question
       </button>
       <ul class="dropdown-menu">
         <li>
           <form v-on:submit.prevent>
             <div class="form-group">
-              <input type="text" class="form-control" id="password" placeholder="Enter password" autocomplete="on"
+              <input v-model="idMod" type="text" class="form-control" placeholder="Enter id to modify" autocomplete="on"
                 @keydown.enter="login">
             </div>
             <div class="space">
-              <button type="button" class="btn btn-primary" @click="updateQuestion">Login</button><br />
-              <p v-if="isWrong" style="color:red;">Mot de passe incorrect</p>
+              <button type="button" class="btn btn-primary" @click="getQuestion">send</button><br />
+              <textarea v-model="questionMod" type="text" class="form-control" placeholder="question"
+                autocomplete="on"></textarea>
+              <button type="button" class="btn btn-primary" @click="modifyQuestion">modify</button><br />
             </div>
           </form>
         </li>
       </ul>
     </div>
     <div class="btn-group dropdown">
-      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+        data-bs-auto-close="false">
         Supprimer une question
       </button>
       <ul class="dropdown-menu">
@@ -49,12 +52,11 @@
           <form v-on:submit.prevent>
             <div class="form-group">
               <label>Id à supprimer</label>
-              <input v-model="password" type="text" class="form-control" placeholder="id" autocomplete="on"
+              <input v-model="idDelete" type="text" class="form-control" placeholder="id" autocomplete="on"
                 @keydown.enter="deleteQuestion">
             </div>
             <div class="space">
               <button type="button" class="btn btn-primary" @click="deleteQuestion">Login</button><br />
-              <p v-if="isWrong" style="color:red;">Mot de passe incorrect</p>
             </div>
           </form>
         </li>
@@ -72,20 +74,22 @@ import quizApiService from "@/services/QuizApiService";
 export default {
   data() {
     return {
-      question:''
+      question: '',
+      idDelete: '',
+      idMod: '',
+      questionMod: ''
     };
   },
   async created() {
     try {
-
     } catch (err) {
       console.log(err);
     }
   },
   methods: {
-    async deleteQuestion(id) {
+    async deleteQuestion() {
       try {
-        var val = await quizApiService.deleteQuestion(id, participationStorageService.getToken());
+        var val = await quizApiService.deleteQuestion(this.idDelete, participationStorageService.getToken());
       } catch (error) {
 
       }
@@ -115,6 +119,23 @@ export default {
         console.log(err)
       }
 
+    },
+    async getQuestion() {
+      try {
+        var val = await quizApiService.getQuestionid(this.idMod);
+        this.questionMod = JSON.stringify(val.data);
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    async modifyQuestion() {
+      try {
+        console.log(this.questionMod);
+        var val = await quizApiService.updateQuestion(this.idMod, JSON.parse(this.questionMod), participationStorageService.getToken());
+      } catch (err) {
+        console.log(err)
+      }
+
     }
 
   }
@@ -127,6 +148,7 @@ export default {
   justify-content: space-between;
   column-gap: 50px;
 }
+
 textarea {
   width: 300px;
   height: 300px;

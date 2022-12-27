@@ -25,6 +25,7 @@ export default {
       const value = await quizApiService.getQuizInfo();
       var registered = value.data['scores'];
       this.registeredScores = registered;
+      console.log(participationStorageService.getToken())
 
     } catch (err) {
       console.log(err);

@@ -18,7 +18,7 @@ export default {
     };
   },
   async created() {
-    console.log("Composant New quiz page 'created'");
+    console.log(participationStorageService.getToken());
     participationStorageService.clear();
     try {
       

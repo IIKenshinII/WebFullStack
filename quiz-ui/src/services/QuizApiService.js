@@ -34,6 +34,10 @@ export default {
     // not implemented
     return this.call("get","questions?position="+position);
   },
+  getQuestionid(id) {
+    // not implemented
+    return this.call("get","questions/"+id);
+  },
   postAnswers(answers)
   {
     return this.call("post","participations",answers);
