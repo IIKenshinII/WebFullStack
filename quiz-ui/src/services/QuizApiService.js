@@ -34,8 +34,33 @@ export default {
     // not implemented
     return this.call("get","questions?position="+position);
   },
-  postAnswers(Answers)
+  postAnswers(answers)
   {
-    return this.call("post","participations",Answers);
+    return this.call("post","participations",answers);
+  },
+  postLogin(login)
+  {
+    return this.call("post","login",login);
+  },
+  deleteAllQuestions(token)
+  {
+    return this.call("delete","questions/all",null,token);
+  },
+  deleteQuestion(id,token)
+  {
+    return this.call("delete","questions/"+id,null,token);
+  },
+  addQuestion(question,token)
+  {
+    return this.call("post","questions",question,token);
+  },
+  updateQuestion(id,question,token)
+  {
+    return this.call("put","questions/"+id,question,token);
+  },
+  deleteAllParticipations(token)
+  {
+    return this.call("delete","participations/all",null,token);
   }
+  
 };

@@ -19,6 +19,7 @@ export default {
   },
   async created() {
     console.log("Composant New quiz page 'created'");
+    participationStorageService.clear();
     try {
       
     } catch (err) {

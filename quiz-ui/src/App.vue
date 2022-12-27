@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-
+import ParticipationStorageService from './services/ParticipationStorageService';
 </script>
 
 <template>
@@ -22,6 +22,16 @@ import { RouterLink, RouterView } from 'vue-router'
               <RouterLink to="/">Home</RouterLink>
             </div>
           </li>
+          </ul>
+          <ul class="collapse navbar-collapse justify-content-end">
+          <li class="nav-item">
+            <div class="nav-link" v-if="logged==null" :key="logged">
+              <RouterLink to="/Login">Login</RouterLink>
+            </div>
+            <div class="nav-link" v-else>
+              <RouterLink to="/Adminparam">Gestion Admin </RouterLink>
+            </div>
+          </li>
         </ul>
       </div>
     </nav>
@@ -29,6 +39,16 @@ import { RouterLink, RouterView } from 'vue-router'
 
   <RouterView />
 </template>
+
+<script>
+export default{
+  data()
+  {
+    return {logged:null};
+  },
+  
+}
+</script>
 
 <style scoped>
 nav {
@@ -40,4 +60,6 @@ nav {
   margin-bottom: 20px;
 
 }
+
+
 </style>

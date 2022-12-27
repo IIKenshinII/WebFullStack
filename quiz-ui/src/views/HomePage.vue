@@ -12,6 +12,7 @@
 
 <script>
 import quizApiService from "@/services/QuizApiService";
+import participationStorageService from "@/services/ParticipationStorageService";
 export default {
   data() {
     return {
@@ -24,6 +25,7 @@ export default {
       const value = await quizApiService.getQuizInfo();
       var registered = value.data['scores'];
       this.registeredScores = registered;
+
     } catch (err) {
       console.log(err);
     }

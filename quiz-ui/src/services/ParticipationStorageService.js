@@ -17,5 +17,12 @@ export default {
   getParticipationScore() {
     // todo : implement
     return JSON.parse(window.localStorage.getItem("participationScore"));
+  },
+  saveToken(token) {
+    window.localStorage.setItem("token", token);
+  },
+  getToken() {
+    // todo : implement
+    return window.localStorage.getItem("token");
   }
 };
