@@ -1,47 +1,7 @@
 <template>
   <div class="paddingright">
-    <div class="btn-group dropdown">
-      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-auto-close="false"
-        data-bs-toggle="dropdown" aria-expanded="false">
-        Ajouter une question
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <form v-on:submit.prevent>
-            <div class="form-group">
-              <label>Question en JSON:</label>
-              <textarea v-model="question" type="text" class="form-control" placeholder="question" autocomplete="on"
-                @keydown.enter="addQuestion"></textarea>
-            </div>
-            <div class="space">
-              <button type="button" class="btn btn-primary" @click="addQuestion">add</button><br />
-            </div>
-          </form>
-        </li>
-      </ul>
-    </div>
-    <div class="btn-group dropdown">
-      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
-        data-bs-auto-close="false">
-        Modifier une question
-      </button>
-      <ul class="dropdown-menu">
-        <li>
-          <form v-on:submit.prevent>
-            <div class="form-group">
-              <input v-model="idMod" type="text" class="form-control" placeholder="Enter id to modify" autocomplete="on"
-                @keydown.enter="login">
-            </div>
-            <div class="space">
-              <button type="button" class="btn btn-primary" @click="getQuestion">send</button><br />
-              <textarea v-model="questionMod" type="text" class="form-control" placeholder="question"
-                autocomplete="on"></textarea>
-              <button type="button" class="btn btn-primary" @click="modifyQuestion">modify</button><br />
-            </div>
-          </form>
-        </li>
-      </ul>
-    </div>
+    <button type="button" class="btn btn-primary text-nowrap " @click="this.$router.push('/NewQuestion')">Ajouter une question</button><br />
+    <button type="button" class="btn btn-primary text-nowrap " @click="this.$router.push('/Edit')">Modifier une question</button><br />
     <div class="btn-group dropdown">
       <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
         data-bs-auto-close="false">
@@ -56,17 +16,24 @@
                 @keydown.enter="deleteQuestion">
             </div>
             <div class="space">
-              <button type="button" class="btn btn-primary" @click="deleteQuestion">Login</button><br />
+              <button type="button" class="btn btn-primary" @click="deleteQuestion">Delete</button><br />
             </div>
+            <span style="color:green;" v-if="success1=='s'">Successfully deleted</span>
+            <span style="color:red;" v-else-if="success1=='f'">Failed to delete</span>
           </form>
         </li>
       </ul>
     </div>
     <button type="button" class="btn btn-primary text-nowrap " @click="deleteAllQuestions">Supprimer toutes les
       questions</button><br />
+      <span style="color:green;" v-if="success2=='s'">Successfully deleted</span>
+  <span style="color:red;" v-else-if="success2=='f'">Failed to delete</span>
   </div>
+
   <button type="button" class="btn btn-primary text-nowrap " @click="deleteAllParticipations">Supprimer toutes les
     participations</button><br />
+    <span style="color:green;" v-if="success3=='s'">Successfully deleted</span>
+    <span style="color:red;" v-else-if="success3=='f'">Failed to delete</span>
 </template>
 <script>
 import participationStorageService from "@/services/ParticipationStorageService";
@@ -77,11 +44,15 @@ export default {
       question: '',
       idDelete: '',
       idMod: '',
-      questionMod: ''
+      questionMod: '',
+      success1:'',
+      success2:'',
+      success3:''
     };
   },
   async created() {
     try {
+      
     } catch (err) {
       console.log(err);
     }
@@ -90,50 +61,48 @@ export default {
     async deleteQuestion() {
       try {
         var val = await quizApiService.deleteQuestion(this.idDelete, participationStorageService.getToken());
+        if(typeof val=='undefined')
+        {
+          this.success1='f';
+        }
+        else
+        {
+          this.success1='s';
+        }
+       
       } catch (error) {
-
+       
       }
 
     },
     async deleteAllQuestions() {
       try {
         var val = await quizApiService.deleteAllQuestions(participationStorageService.getToken());
+        if(typeof val=='undefined')
+        {
+          this.success2='f';
+        }
+        else
+        {
+          this.success2='s';
+        }
       } catch (error) {
-
+        
       }
 
     },
     async deleteAllParticipations() {
       try {
         var val = await quizApiService.deleteAllParticipations(participationStorageService.getToken());
+        if(typeof val=='undefined')
+        {
+          this.success3='f';
+        }
+        else
+        {
+          this.success3='s';
+        }
       } catch (error) {
-
-      }
-
-    },
-    async addQuestion() {
-      try {
-
-        var val = await quizApiService.addQuestion(JSON.parse(this.question), participationStorageService.getToken());
-      } catch (err) {
-        console.log(err)
-      }
-
-    },
-    async getQuestion() {
-      try {
-        var val = await quizApiService.getQuestionid(this.idMod);
-        this.questionMod = JSON.stringify(val.data);
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    async modifyQuestion() {
-      try {
-        console.log(this.questionMod);
-        var val = await quizApiService.updateQuestion(this.idMod, JSON.parse(this.questionMod), participationStorageService.getToken());
-      } catch (err) {
-        console.log(err)
       }
 
     }

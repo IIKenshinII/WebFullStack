@@ -2,8 +2,9 @@
   <h2>Classement des meilleurs utilisateurs :</h2><br />
   <ul class="listgrp">
 
-    <div v-for="scoreEntry in registeredScores" v-bind:key="scoreEntry.date">
-      <li class="affichageresult">{{ scoreEntry.playerName }} - {{ scoreEntry.score }}</li>
+    <div v-for="scoreEntry,index in registeredScores" v-bind:key="scoreEntry.date">
+      <li class="affichageresult">
+        {{ scoreEntry.playerName }} - {{ scoreEntry.score }}</li>
     </div>
   </ul>
   <br />
@@ -42,7 +43,7 @@ export default {
 
 ul.listgrp {
   list-style-type: none;
-  list-style: georgian inside url('src/assets/crown.png');
+  list-style: decimal inside url("@/assets/crown.png");
   overflow-y: scroll;
   height: 200px;
   width: 100%;

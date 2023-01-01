@@ -6,6 +6,8 @@ import QuestionDisplay from '../views/QuestionDisplay.vue'
 import Result from '../views/Result.vue'
 import Login from '../views/Login.vue'
 import Adminparam from '../views/Adminparam.vue'
+import Edit from '../views/Edit.vue'
+import NewQuestion from '../views/NewQuestion.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +51,18 @@ const router = createRouter({
       path: '/Adminparam',
       name: 'Adminparam',
       component: Adminparam
+      
+    },
+    {
+      path: '/Edit',
+      name: 'Edit',
+      component: Edit
+      
+    },
+    {
+      path: '/NewQuestion',
+      name: 'NewQuestion',
+      component: NewQuestion
       
     }
   ]

@@ -4,7 +4,7 @@ import ParticipationStorageService from './services/ParticipationStorageService'
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light header">
     <a class="navbar-brand" href="#">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,6 +65,7 @@ nav {
   width: 100%;
   top: 0;
   left: 0;
+  z-index: 9999;
   margin-bottom: 20px;
 }
 </style>
