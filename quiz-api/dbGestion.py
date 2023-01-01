@@ -23,6 +23,8 @@ def create_connection():
 
     return conn
 
+#insert a question in the database using the parameter
+#return a string if error else return an int
 def insert_question(question):
     conn=create_connection()
     cur = conn.cursor()
@@ -47,6 +49,9 @@ def insert_question(question):
     conn.close()
     return id
 
+
+#insert the possible answers of the questions
+#return a string if error else return an int
 def insert_answer(question,cur,id):
     insert_to_answer = ''' INSERT INTO Answer(text,isCorrect,idQuestion) VALUES(?,?,?) '''
     answers=getattr(question,'possibleAnswers')
@@ -62,6 +67,8 @@ def insert_answer(question,cur,id):
     return cur.lastrowid
 
 
+# get a question from it's id
+#return a question object if succes else string
 def get_question(id):
     conn=create_connection()
     cur = conn.cursor()
@@ -88,6 +95,9 @@ def get_question(id):
         conn.close()
         return "get question failed"
 
+
+# update a question using a question object
+# return update succesful if success else  update question failed
 def update_question(question):
     conn=create_connection()
     cur = conn.cursor()
@@ -116,6 +126,9 @@ def update_question(question):
         conn.close()
         return "update failed"
 
+
+# delete an answer using a question id
+# return true if success else false
 def delete_answer(cur,id):
     delete_ans = ''' DELETE FROM Answer WHERE idQuestion=?'''
     data_id=(id,)
@@ -125,6 +138,8 @@ def delete_answer(cur,id):
     except Error as e:
             return False
 
+# delete a question using id
+# return string if failed else nothing
 def delete_question(id):
     conn=create_connection()
     cur = conn.cursor()
@@ -149,6 +164,8 @@ def delete_question(id):
             conn.close()
             return "error while deleting question"
 
+# delete all questions
+# return int if successful else string
 def delete_all_questions():
     conn=create_connection()
     cur = conn.cursor()
@@ -167,6 +184,8 @@ def delete_all_questions():
     return result
 
 
+# get question from it's position
+# return a question if success else string
 def get_question_position(position):
     conn=create_connection()
     cur = conn.cursor()
@@ -187,6 +206,9 @@ def get_question_position(position):
             return "Failed get question by position"
 
 
+# update all question's position from the given position
+# to avoid having duplicate position and to reorder the questions
+# return an int if success else string
 def update_all_positions(position):
     conn=create_connection()
     cur = conn.cursor()
@@ -215,6 +237,8 @@ def update_all_positions(position):
 
     return result
 
+# used after update_all_positions call to reset the positions following a natural order
+# return an int if success else string 
 def equilibrate():
     conn=create_connection()
     cur = conn.cursor()
@@ -240,6 +264,7 @@ def equilibrate():
     return result
 
 
+# get the number of questions
 def get_number_questions():
     conn=create_connection()
     cur = conn.cursor()
@@ -256,6 +281,9 @@ def get_number_questions():
     conn.close()
     return nb_questions
 
+# calculate the score of the player using the participations
+# return the score of the player and a list containing the positions of the good answers and
+# if the player's answers are good or not
 def calculate_score(participation):
     score=0
     max_range=get_number_questions()+1
@@ -278,6 +306,8 @@ def calculate_score(participation):
         goodAnswerList.append({'correctAnswerPosition':correctAnswerPosition,'wasCorrect':wasCorrect})
     return score,goodAnswerList
 
+# add a player's participation in the database
+# return an int if success else string 
 def add_participation(participation):
     conn=create_connection()
     cur = conn.cursor()
@@ -295,6 +325,9 @@ def add_participation(participation):
     conn.close()
     return result
 
+
+# get all participations of the quiz
+# return a list of all the participations
 def get_all_participations():
     conn=create_connection()
     cur = conn.cursor()
@@ -313,6 +346,9 @@ def get_all_participations():
     conn.close()
     return participations_list
 
+
+# delete all participations
+# return an int if success else string 
 def delete_all_participations():
     conn=create_connection()
     cur = conn.cursor()
@@ -328,6 +364,7 @@ def delete_all_participations():
     conn.close()
     return result
 
+# creat a database using the bdd.sql file
 def database_create():
     with create_connection() as db:
         with open('bdd.sql', mode='r') as f:
