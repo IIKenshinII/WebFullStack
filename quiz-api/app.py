@@ -70,7 +70,12 @@ def PutQuestion(idQuestion):
 	if result=="quiz-app-admin":
 		question=get_question(idQuestion)
 		if type(question)==Question:
+			add=0
+			if(getattr(question,'position')==1):
+				add=1
 			question.JsonToPy(payload)
+			var=getattr(question,'position')
+			setattr(question,'position',getattr(question,'position')+add)
 			val=update_all_positions(getattr(question,'position'))
 			if type(val)==int:
 				setattr(question,'position',getattr(question,'position')+val)

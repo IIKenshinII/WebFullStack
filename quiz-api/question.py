@@ -20,7 +20,7 @@ class Question():
        setattr(self,'image',payload['image'])
        setattr(self,'text',payload['text'])
        setattr(self,'title',payload['title'])
-       setattr(self,'position',payload['position'])
+       setattr(self,'position',int(payload['position']))
        setattr(self,'possibleAnswers',[])
        for answer in payload['possibleAnswers']:
             ans=Answer()
