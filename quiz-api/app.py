@@ -114,9 +114,9 @@ def GetQuestionByPosition():
 def DeleteQuestion(idQuestion):
 	#Récupérer le token envoyé en paramètre
 	token=request.headers.get('Authorization')
-	question_result=delete_question(idQuestion)
 	result=verifyToken(token)
 	if result=="quiz-app-admin":
+		question_result=delete_question(idQuestion)
 		if type(question_result)==str:
 			return question_result,404
 		else :
