@@ -18,8 +18,7 @@ export default {
     };
   },
   async created() {
-    console.log(participationStorageService.getToken());
-    participationStorageService.clear();
+
     try {
       
     } catch (err) {

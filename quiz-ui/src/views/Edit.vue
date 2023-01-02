@@ -1,8 +1,6 @@
 <template>
         <div class="midd">
           <form v-on:submit.prevent>
-              <input v-model="id" type="text" class="form-control" placeholder="Enter id to edit" autocomplete="on"><br />
-              <button type="button" class="btn btn-primary" @click="getQuestion">Send</button><br /><br />
               <input v-model="title" type="text" class="form-control" placeholder="title" autocomplete="on"><br />
               <input v-model="text" type="text" class="form-control" placeholder="text" autocomplete="on"><br />
               <input v-model="pos" type="text" class="form-control" placeholder="position" autocomplete="on"><br />
@@ -31,7 +29,11 @@
               </div>
               <span v-if="!(true3||true2||true1||true4)" style="color:red;">One answer needs to be true</span><br/>
               <img v-bind:src="image" style="width: 300px; height: 337px; object-fit: contain" > <input v-on:change="changeImage()" type="file" id="myFile" name="filename" ref="myFile"><br/>
-              <button type="button" class="btn btn-primary" @click="modifyQuestion">Edit</button><br />
+              <div class="gap"> 
+                <button type="button" class="btn btn-primary" @click="modifyQuestion">Editer</button><br />
+                <button type="button" class="btn btn-primary" @click="this.$router.push('/Adminparam')">Annuler</button><br />
+              </div>
+             
           </form>
         </div>
 
@@ -40,10 +42,11 @@
 <script>
 import participationStorageService from "@/services/ParticipationStorageService";
 import quizApiService from "@/services/QuizApiService";
+import Adminparam from "./Adminparam.vue";
 export default {
+  props:['id'],
   data() {
     return {
-      id:'',
       pos: '',
       title:'',
       text:'',
@@ -60,7 +63,8 @@ export default {
   },
   async created() {
     try {
-      
+      console.log(this.id);
+      this.getQuestion();
     } catch (err) {
       console.log(err);
     }
@@ -122,8 +126,13 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .midd{
   margin-top: 10rem;
+}
+.gap{
+  column-gap: 20px;
+  justify-content: space-between;
+  display:flex;
 }
 </style>

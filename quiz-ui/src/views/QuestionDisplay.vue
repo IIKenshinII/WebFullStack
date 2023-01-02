@@ -10,7 +10,6 @@
 </template>
 
 <script>
-
 export default {
   props: { question: { type: Object } },
   emits: ["click-on-answer"],
