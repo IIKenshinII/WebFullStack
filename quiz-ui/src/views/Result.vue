@@ -1,7 +1,7 @@
 <template>
   <h1>Résultats du participant {{ name }}<br/>Score: {{ score }}</h1><br/>
   <ul>
-    <li v-for="question,index in questions" :key="question.position" :value="question.position" >
+    <li v-for="question,index in questions" :key="question.position" :value="question.position" style="border-style: solid;border-color:black;margin-bottom:2%;" >
         <p>{{ question.title }} </p><br />
         <p>{{ question.text }}</p><br />
         <img v-bind:src="question.image" style="width: 300px; height: 337px; object-fit: contain" /><br/>

@@ -1,5 +1,6 @@
 <template>
-  <h2>Classement des meilleurs utilisateurs :</h2><br />
+  <div class="bg2"></div>
+  <h2 style="font: italic small-caps bold 16px/2 cursive; color:blue">Classement des meilleurs utilisateurs :</h2><br />
   <ul class="listgrp">
 
     <div v-for="scoreEntry,index in registeredScores" v-bind:key="scoreEntry.date">
@@ -8,7 +9,7 @@
     </div>
   </ul>
   <br />
-  <router-link to="/NewQuizPage">Démarrer le quiz !</router-link>
+  <Router-link to="/NewQuizPage">Démarrer le quiz !</Router-link>
 </template>
 
 <script>
@@ -39,6 +40,7 @@ export default {
 .affichageresult {
   border-style: outset;
   border-color: rgb(121, 216, 216);
+  background-color: rgb(233, 233, 233);
 }
 
 ul.listgrp {
@@ -48,4 +50,20 @@ ul.listgrp {
   height: 200px;
   width: 100%;
 }
+.bg2{
+  background-image: url("@/assets/bg2.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  align-items: center;
+  text-align: center;
+  
+}
+
 </style>

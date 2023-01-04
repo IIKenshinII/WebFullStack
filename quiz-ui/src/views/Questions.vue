@@ -1,5 +1,6 @@
 <template>
-<QuestionManager/>
+    <div class="bg"><QuestionManager /> </div>
+         
 </template>
 
 <script>
@@ -21,5 +22,19 @@ export default {
 
 </script>
 <style >
-
+.bg{
+  background-image: url("@/assets/bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  align-items: center;
+  text-align: center;
+  
+}
 </style>

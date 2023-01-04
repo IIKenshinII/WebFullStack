@@ -1,6 +1,6 @@
 <template>
-  <h1>Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestion }}</h1><br />
-  <QuestionDisplay :question="currentQuestion" @click-on-answer="answerClickedHandler" />
+    <h1 class="cent2">Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestion }}</h1><br />
+    <QuestionDisplay :question="currentQuestion" @click-on-answer="answerClickedHandler" />
 </template>
 
 <script>
@@ -55,3 +55,15 @@ export default {
 };
 
 </script>
+
+<style>
+.cent2 {
+
+margin-left: 30%;
+margin-right: 30%;
+margin-top: 5%;
+margin-bottom: 1%;
+background-color: rgba(253, 253, 253, 0.788);
+
+}
+</style>

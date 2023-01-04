@@ -1,7 +1,8 @@
 <template>
-  <form>
-    <div class="form-group">
-      <label>Saisissez votre nom :</label>
+  <div class="bg"></div>
+  <form class="form">
+    <div class="form-group" >
+      <label style="font: italic small-caps bold 16px/2 cursive; color:red">Saisissez votre nom :</label>
       <input v-model="username" type="text" class="form-control" id="username" placeholder="Username"
         @keydown.enter="launchNewQuiz">
     </div>
@@ -38,6 +39,14 @@ export default {
 </script>
 <style scope>
 .space {
-  padding-top: 5px;
+  margin-top: 10%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.form{
+  margin:auto;
+  background-color:rgba(253, 253, 253, 0.788);
+  text-align: center;
 }
 </style>

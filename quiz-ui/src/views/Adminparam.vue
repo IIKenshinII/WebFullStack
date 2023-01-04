@@ -15,7 +15,7 @@
     </div><br/>
       <ul >
         <li v-for="question,index in questions" :key="question.position" :value="question.position" >
-        <p>Question {{ index+1 }} :<a @click="send(index)">{{ question['text'] }}</a></p><br />
+        <p>Question {{ index+1 }} : <a @click="send(index)">{{ question['text'] }}</a></p><br />
       </li>
       </ul>
     </div>

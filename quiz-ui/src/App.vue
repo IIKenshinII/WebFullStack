@@ -5,7 +5,6 @@ import ParticipationStorageService from './services/ParticipationStorageService'
 
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light header">
-    <a class="navbar-brand" href="#">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -14,12 +13,13 @@ import ParticipationStorageService from './services/ParticipationStorageService'
       <ul class="navbar-nav">
         <li class="nav-item">
           <div class="nav-link">
-            <RouterLink to="/NewQuizPage">Quiz</RouterLink>
+            <RouterLink to="/">Home</RouterLink>
+            
           </div>
         </li>
         <li class="nav-item">
           <div class="nav-link">
-            <RouterLink to="/">Home</RouterLink>
+            <RouterLink to="/NewQuizPage">Quiz</RouterLink>
           </div>
         </li>
       </ul>
