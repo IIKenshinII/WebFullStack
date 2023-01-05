@@ -3,13 +3,14 @@
   <h2 style="font: italic small-caps bold 16px/2 cursive; color:blue">Classement des meilleurs utilisateurs :</h2><br />
   <ul class="listgrp">
 
-    <div v-for="scoreEntry,index in registeredScores" v-bind:key="scoreEntry.date">
+    <div v-for="scoreEntry, index in registeredScores" v-bind:key="scoreEntry.date">
       <li class="affichageresult">
         {{ scoreEntry.playerName }} - {{ scoreEntry.score }}</li>
     </div>
   </ul>
   <br />
-  <Router-link to="/NewQuizPage">Démarrer le quiz !</Router-link>
+  <Router-link style="font: italic small-caps bold 16px/2 cursive; color:blue" to="/NewQuizPage">Démarrer le quiz
+    !</Router-link>
 </template>
 
 <script>
@@ -50,7 +51,8 @@ ul.listgrp {
   height: 200px;
   width: 100%;
 }
-.bg2{
+
+.bg2 {
   background-image: url("@/assets/bg2.jpg");
   background-repeat: no-repeat;
   background-position: center;
@@ -63,7 +65,6 @@ ul.listgrp {
   overflow: auto;
   align-items: center;
   text-align: center;
-  
-}
 
+}
 </style>
