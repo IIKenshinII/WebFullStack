@@ -129,9 +129,9 @@ def DeleteQuestion(idQuestion):
 def DeleteAllQuestion():
 	#Récupérer le token envoyé en paramètre
 	token=request.headers.get('Authorization')
-	question_result=delete_all_questions()
 	result=verifyToken(token)
 	if result=="quiz-app-admin":
+		question_result=delete_all_questions()
 		if type(question_result)==str:
 			return question_result,404
 		else :
