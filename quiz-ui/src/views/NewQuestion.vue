@@ -28,7 +28,10 @@
           <label for="horns">Istrue</label>
         </div>
         <span v-if="!(true3||true2||true1||true4)" style="color:red;">One answer needs to be true</span><br/>
-        <img v-bind:src="image" style="width: 300px; height: 337px; object-fit: contain" > <input v-on:change="changeImage()" type="file" id="myFile" name="filename" ref="myFile"><br/>
+        <div v-if="image!==''">
+          <img v-bind:src="image" style="width: 300px; height: 337px; object-fit: contain" >
+        </div>
+         <input v-on:change="changeImage()" type="file" id="myFile" name="filename" ref="myFile"><br/>
         <button type="submit" class="btn btn-primary" @click="postQuestion">Add</button><br />
     </form>
   </div>
@@ -68,6 +71,7 @@ methods: {
       if((this.true3||this.true2||this.true1||this.true4))
       {
         var val = await quizApiService.addQuestion( this.getQuestionJSON(), participationStorageService.getToken());
+        console.log(val.data);
         this.$router.push("/Adminparam");
         
       }

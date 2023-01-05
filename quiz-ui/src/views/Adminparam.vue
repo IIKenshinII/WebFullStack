@@ -37,10 +37,18 @@ export default {
   },
   async created() {
     try {
-      var value = await quizApiService.getQuizInfo();
-      this.size = value.data['size'];
-      this.listAllQuestions();
-      console.log(this.questions)
+      if(participationStorageService.getToken()==null)
+      {
+        this.$router.push('/Login')
+      }
+      else{
+        var value = await quizApiService.getQuizInfo();
+        this.size = value.data['size'];
+        this.listAllQuestions();
+        console.log(this.questions);
+      }
+    
+
       
     } catch (err) {
       console.log(err);
@@ -101,7 +109,8 @@ export default {
       logout()
       {
         participationStorageService.clear();
-        this.$router.push('/Login')
+        window.location.reload();
+        
       }
   }
 };

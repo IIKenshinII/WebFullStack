@@ -23,6 +23,10 @@ export default {
   },
   async created() {
     console.log("Composant login created");
+    if(participationStorageService.getToken()!=null)
+    {
+      this.$router.push('/Adminparam');
+    }
     try {
 
     } catch (err) {
@@ -39,7 +43,8 @@ export default {
         else {
           participationStorageService.saveToken(String(val.data['token']));
           console.log(participationStorageService.getToken());
-          this.$router.push('/Adminparam');
+          window.location.reload();
+          
         }
 
       } catch (err) {
