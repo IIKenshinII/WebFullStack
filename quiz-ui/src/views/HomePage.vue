@@ -4,7 +4,14 @@
   <ul class="listgrp">
 
     <div v-for="scoreEntry, index in registeredScores" v-bind:key="scoreEntry.date">
-      <li class="affichageresult">
+      <li class="affichageresult" v-if="index==0" style="background-color: black;color:gold;  filter: invert(69%) sepia(99%) saturate(693%) hue-rotate(360deg) brightness(107%) contrast(104%);">
+        {{ scoreEntry.playerName }} - {{ scoreEntry.score }}</li>
+
+        <li class="affichageresult" v-else-if="index==1" style="color:silver; background-color: black; filter: invert(89%) sepia(4%) saturate(34%) hue-rotate(322deg) brightness(92%) contrast(78%);">
+        {{ scoreEntry.playerName }} - {{ scoreEntry.score }}</li>
+        <li class="affichageresult" v-else-if="index==2" style="color:#796221; background-color: black; filter: invert(31%) sepia(95%) saturate(421%) hue-rotate(355deg) brightness(91%) contrast(96%);">
+        {{ scoreEntry.playerName }} - {{ scoreEntry.score }}</li>
+        <li class="affichageresult" v-else style="color:#796221; background-color: ">
         {{ scoreEntry.playerName }} - {{ scoreEntry.score }}</li>
     </div>
   </ul>
@@ -40,7 +47,7 @@ export default {
 <style scoped>
 .affichageresult {
   border-style: outset;
-  border-color: rgb(121, 216, 216);
+  border-color: rgb(17, 17, 17);
   background-color: rgb(233, 233, 233);
 }
 
