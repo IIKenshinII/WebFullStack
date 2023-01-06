@@ -1,7 +1,7 @@
 # Projet web fullstack
 
 ## Team Members
-- Amine HEDJAR(IIKenshinII)
+- Amine HEDJAR(IIKenshinII & lKenshinl)
 - Arjya DEY(Arkyaa)
 
 ## Tests postman
