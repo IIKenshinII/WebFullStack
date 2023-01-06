@@ -14,7 +14,7 @@ import ParticipationStorageService from './services/ParticipationStorageService'
         <li class="nav-item">
           <div class="nav-link">
             <RouterLink to="/">Home</RouterLink>
-            
+
           </div>
         </li>
         <li class="nav-item">
@@ -44,15 +44,13 @@ import ParticipationStorageService from './services/ParticipationStorageService'
 import participationStorageService from "@/services/ParticipationStorageService";
 export default {
   data() {
-    return { logged: false};
+    return { logged: false };
   },
 
   async created() {
-    if(participationStorageService.getToken()!=null)
-    {
-      this.logged=true;
+    if (participationStorageService.getToken() != null) {
+      this.logged = true;
     }
-    console.log("test"+participationStorageService.getToken());
   },
 
 }

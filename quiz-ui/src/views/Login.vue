@@ -5,7 +5,7 @@
       <input v-model="password" type="password" class="form-control" id="password" placeholder="Enter password"
         autocomplete="on" @keydown.enter="login">
     </div>
-    <div >
+    <div>
       <button type="button" class="btn btn-primary space" @click="login">Login</button><br />
       <p v-if="isWrong" style="color:red;">Mot de passe incorrect</p>
     </div>
@@ -23,8 +23,7 @@ export default {
   },
   async created() {
     console.log("Composant login created");
-    if(participationStorageService.getToken()!=null)
-    {
+    if (participationStorageService.getToken() != null) {
       this.$router.push('/Adminparam');
     }
     try {
@@ -42,9 +41,8 @@ export default {
         }
         else {
           participationStorageService.saveToken(String(val.data['token']));
-          console.log(participationStorageService.getToken());
           window.location.reload();
-          
+
         }
 
       } catch (err) {

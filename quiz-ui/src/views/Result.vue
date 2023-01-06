@@ -40,7 +40,6 @@ export default {
       this.answers = participationstorageservice.getParticipationScore();
       this.name = participationstorageservice.getPlayerName();
       this.nbQuestions = this.answers.length;
-      console.log(this.answers.length + " " + this.name + "  " + this.nbQuestions);
       const value = await quizApiService.postAnswers({ 'playerName': this.name, "answers": this.answers });
       this.score = value.data['score'];
       this.questionGoodAnswers = value.data['answersSummaries'];

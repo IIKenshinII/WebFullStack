@@ -1,6 +1,6 @@
 <template>
-    <h1 class="cent2">Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestion }}</h1><br />
-    <QuestionDisplay :question="currentQuestion" @click-on-answer="answerClickedHandler" />
+  <h1 class="cent2">Question {{ currentQuestionPosition }} / {{ totalNumberOfQuestion }}</h1><br />
+  <QuestionDisplay :question="currentQuestion" @click-on-answer="answerClickedHandler" />
 </template>
 
 <script>
@@ -27,25 +27,21 @@ export default {
     async answerClickedHandler(n) {
       this.currentQuestionPosition++;
       this.Answers.push(n);
-      console.log(this.Answers.length);
-      if(this.currentQuestionPosition>this.totalNumberOfQuestion)
-      {
-          this.endQuiz();
+      if (this.currentQuestionPosition > this.totalNumberOfQuestion) {
+        this.endQuiz();
       }
-      else
-      {
-          this.loadQuestionByPosition();
+      else {
+        this.loadQuestionByPosition();
       }
-      
+
       //console.log(this.Answers);
     },
     async loadQuestionByPosition() {
-        var val2 = await QuizApiService.getQuestion(this.currentQuestionPosition);
-        this.currentQuestion.questionTitle = val2.data['title'];
-        this.currentQuestion.questionText = val2.data['text'];
-        this.currentQuestion.questionImage = val2.data['image'];
-        this.currentQuestion.possibleAnswers = val2.data['possibleAnswers'];
-        console.log(this.currentQuestionPosition+"   "+this.totalNumberOfQuestion);
+      var val2 = await QuizApiService.getQuestion(this.currentQuestionPosition);
+      this.currentQuestion.questionTitle = val2.data['title'];
+      this.currentQuestion.questionText = val2.data['text'];
+      this.currentQuestion.questionImage = val2.data['image'];
+      this.currentQuestion.possibleAnswers = val2.data['possibleAnswers'];
     },
     async endQuiz() {
       participationStorageService.saveParticipationScore(this.Answers);
@@ -59,11 +55,11 @@ export default {
 <style>
 .cent2 {
 
-margin-left: 30%;
-margin-right: 30%;
-margin-top: 5%;
-margin-bottom: 1%;
-background-color: rgba(253, 253, 253, 0.788);
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-top: 5%;
+  margin-bottom: 1%;
+  background-color: rgba(253, 253, 253, 0.788);
 
 }
 </style>

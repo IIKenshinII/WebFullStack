@@ -16,7 +16,7 @@
         @click="logout"><i class="bi bi-box-arrow-right"></i> Logout</button><br />
     </div><br />
     <ul>
-      <li v-for="question, index in questions" :key="question.position" :value="question.position">
+      <li v-for="question, index in questions" :key="question.position">
         <p>Question {{ index+ 1 }} : <a @click="send(index)">{{ question['text'] }}</a></p><br />
       </li>
     </ul>
@@ -46,7 +46,6 @@ export default {
         var value = await quizApiService.getQuizInfo();
         this.size = value.data['size'];
         this.listAllQuestions();
-        console.log(this.questions);
       }
 
 
@@ -64,6 +63,7 @@ export default {
         }
         else {
           this.success2 = 's';
+          this.questions = [];
         }
       } catch (error) {
 
@@ -78,6 +78,7 @@ export default {
         }
         else {
           this.success3 = 's';
+
         }
       } catch (error) {
       }
