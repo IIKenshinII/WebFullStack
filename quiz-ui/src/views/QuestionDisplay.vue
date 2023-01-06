@@ -1,10 +1,10 @@
 <template>
   <div class="cent">
-    <p>{{ question.questionTitle }}</p><br />
-    <p>{{ question.questionText }}</p><br />
+    <p style="font: italic small-caps bold 16px/2 cursive; color:black">{{ question.questionTitle }}</p><br />
+    <p style="font: italic small-caps bold 16px/2 cursive; color:black">{{ question.questionText }}</p><br />
     <img v-bind:src="question.questionImage" style="width: 300px; height: 337px; object-fit: contain" /><br />
     <div v-for="answer, index in question.possibleAnswers">
-      <a class="p-3 mb-2 text-dark border border-dark te" @click="$emit('click-on-answer', index + 1)">{{
+      <a  style="font: italic small-caps bold 16px/2 cursive; color:red" class="p-3 mb-2 text-dark border border-dark te" @click="$emit('click-on-answer', index + 1)">{{
         answer.text
       }}</a>
     </div>
