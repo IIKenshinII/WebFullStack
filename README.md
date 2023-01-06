@@ -10,3 +10,4 @@ Une fois cette action effectuée,tous les tests fonctionnent
 
 ## Data Generation
 Pour générer les données des questions il suffit de lancer la collection data Generation sur postman
+Le fichier postman se trouve dans /quiz-api/Data generation.postman_collection.json
