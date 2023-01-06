@@ -52,14 +52,14 @@ def PostQuestion():
 		if type(get_question_position(pos))==Question:
 			val_update=update_all_positions(pos)
 			if val_update!="update successfull":
-				return val_update,400
+				return '',400
 		question=Question()
 		question.JsonToPy(payload)
 		test=insert_question(question)
 		equilibrate()
 		return {'id':test},200
 	else :
-		return result,401
+		return '',401
 
 @app.route('/questions/<int:idQuestion>', methods=['PUT'])
 def PutQuestion(idQuestion):
