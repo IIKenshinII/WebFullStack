@@ -3,7 +3,7 @@
     <form v-on:submit.prevent>
       <input v-model="title" type="text" class="form-control" placeholder="title" autocomplete="on" required><br />
       <input v-model="text" type="text" class="form-control" placeholder="text" autocomplete="on" required><br />
-      <input v-model="pos" type="text" class="form-control" placeholder="position" autocomplete="on" required><br />
+      <input v-model="pos" type="number" class="form-control" placeholder="position" autocomplete="on" required><br />
 
       <input v-model="answ1" type="text" class="form-control" placeholder="ans1" autocomplete="on" required>
       <div>
