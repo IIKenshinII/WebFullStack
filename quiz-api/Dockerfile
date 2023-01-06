@@ -23,7 +23,7 @@ ENV FLASK_APP=app.py
 COPY . .
 
 # Informations sur l'image
-#LABEL maintainer="Nom Prénom <nom.prénom@esiee.fr>" \
+#LABEL maintainer="Hedjar Amine <amine.hedjar@edu.esiee.fr>" \"Arjya Dey <arjya.dey@edu.esiee.fr>"
     #version="1.0"
 
 # Commande de démarrage du serveur gunicorn
